@@ -1,10 +1,21 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace MutableStringLibrary.Api
 {
     public class Analyze
     {
         private readonly MutableString _mutableString;
+        
+        private CompareOptions Options =>
+            _mutableString.IgnoreCase
+                ? CompareOptions.IgnoreCase
+                : CompareOptions.None;
+
+        private StringComparison Comparison =>
+            _mutableString.IgnoreCase
+                ? StringComparison.CurrentCultureIgnoreCase
+                : StringComparison.CurrentCulture;
 
         internal Analyze(MutableString mutableString)
         {
@@ -16,11 +27,37 @@ namespace MutableStringLibrary.Api
             if (_mutableString.Value == null)
                 return other == null;
 
-            var options = _mutableString.IgnoreCase
-                ? CompareOptions.IgnoreCase
-                : CompareOptions.None;
+            return string.Compare(_mutableString.Value, other, CultureInfo.CurrentCulture, Options) == 0;
+        }
 
-            return string.Compare(_mutableString.Value, other, CultureInfo.CurrentCulture, options) == 0;
+        public bool Has(string? other) =>
+            Has(other, out _, out _);
+
+        public bool Has(string? other, out int start) =>
+            Has(other, out start, out _);
+
+        public bool Has(string? other, out int start, out int length)
+        {
+            start = -1;
+            length = -1;
+
+            if (_mutableString.Value == null && other == null)
+            {
+                start = 0;
+                length = 0;
+                return true;
+            }
+
+            if (_mutableString.Value == null || other == null)
+                return false;
+
+            var foundAt = _mutableString.Value.IndexOf(other, Comparison);
+            if (foundAt < 0)
+                return false;
+
+            start = foundAt;
+            length = other.Length;
+            return true;
         }
     }
 }

@@ -11,6 +11,9 @@ namespace MutableStringLibrary.Api
             _mutableString = mutableString;
         }
 
+        public void Reset() =>
+            _mutableString.Value = _mutableString.DefaultValue;
+
         public bool MiddleTrim()
         {
             if (string.IsNullOrWhiteSpace(_mutableString.Value))

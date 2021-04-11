@@ -1,3 +1,4 @@
+using System.IO.Compression;
 using MutableStringLibrary;
 using Xunit;
 
@@ -32,6 +33,18 @@ namespace MutableStringLibraryTestProject
                 Assert.True(s.Analyze.Is(s2));
             else
                 Assert.False(s.Analyze.Is(s2));
+        }
+
+        [Fact]
+        public void Has()
+        {
+            var s = new MutableString("Conny Karlsson");
+            Assert.True(s.Analyze.Has("KARL", out var start, out var length));
+            Assert.True(start == 6);
+            Assert.True(length == 4);
+            Assert.False(s.Analyze.Has("SVEN", out start, out length));
+            Assert.True(start == -1);
+            Assert.True(length == -1);
         }
     }
 }
