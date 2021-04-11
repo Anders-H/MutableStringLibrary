@@ -1,4 +1,3 @@
-using System.IO.Compression;
 using MutableStringLibrary;
 using Xunit;
 
@@ -45,6 +44,14 @@ namespace MutableStringLibraryTestProject
             Assert.False(s.Analyze.Has("SVEN", out start, out length));
             Assert.True(start == -1);
             Assert.True(length == -1);
+        }
+
+        [Fact]
+        public void IsLimitedToCharacters()
+        {
+            var s = new MutableString("Sven Hedin");
+            Assert.True(s.Analyze.IsLimitedToCharacters("hedin svenne ju"));
+            Assert.False(s.Analyze.IsLimitedToCharacters("nide"));
         }
     }
 }

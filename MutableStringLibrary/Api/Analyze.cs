@@ -59,5 +59,29 @@ namespace MutableStringLibrary.Api
             length = other.Length;
             return true;
         }
+
+        public bool IsLimitedToCharacters(string? characters)
+        {
+            if (_mutableString.Value == null && characters == null)
+                return true;
+
+            if (_mutableString.Value == "" && characters == "")
+                return true;
+
+            if (string.IsNullOrEmpty(characters))
+                return false;
+
+            var allowed = _mutableString.IgnoreCase
+                ? characters.ToLower(CultureInfo.CurrentCulture) + characters.ToUpper(CultureInfo.CurrentCulture)
+                : characters;
+
+            foreach (var c in _mutableString.Value!)
+            {
+                if (allowed!.IndexOf(c) <= -1)
+                    return false;
+            }
+
+            return true;
+        }
     }
 }
