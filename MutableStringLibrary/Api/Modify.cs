@@ -14,11 +14,11 @@ namespace MutableStringLibrary.Api
         }
 
         public void Reset() =>
-            _mutableString.Value = _mutableString.DefaultValue;
+            _mutableString!.Value = _mutableString.DefaultValue;
 
         public bool MiddleTrim()
         {
-            if (string.IsNullOrWhiteSpace(_mutableString.Value))
+            if (string.IsNullOrWhiteSpace(_mutableString!.Value))
             {
                 _mutableString.Value = _mutableString.DefaultValue;
                 return false;
@@ -37,7 +37,7 @@ namespace MutableStringLibrary.Api
 
         public bool LimitToCharacters(string characters)
         {
-            if (string.IsNullOrEmpty(_mutableString.Value))
+            if (string.IsNullOrEmpty(_mutableString!.Value))
                 return true;
 
             var allowed = _mutableString.IgnoreCase

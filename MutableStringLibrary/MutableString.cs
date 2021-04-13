@@ -57,8 +57,8 @@ namespace MutableStringLibrary
             set
             {
                 _autoTrim = value;
-                if (_autoTrim && _value != null)
-                    _value = _value.Trim();
+                if (_autoTrim)
+                    _value = _value?.Trim();
             }
         }
 

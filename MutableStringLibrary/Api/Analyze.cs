@@ -4,10 +4,9 @@ using System.Linq;
 
 namespace MutableStringLibrary.Api
 {
-    public class Analyze : IDisposable
+    public class Analyze
     {
-        private bool _disposed;
-        private MutableString? _mutableString;
+        private MutableString _mutableString;
         
         private CompareOptions Options =>
             _mutableString!.IgnoreCase
@@ -21,7 +20,6 @@ namespace MutableStringLibrary.Api
 
         internal Analyze(MutableString mutableString)
         {
-            _disposed = false;
             _mutableString = mutableString;
         }
 
@@ -79,15 +77,6 @@ namespace MutableStringLibrary.Api
                 : characters;
 
             return _mutableString.Value!.All(c => allowed!.IndexOf(c) > -1);
-        }
-
-        public void Dispose()
-        {
-            if (_disposed)
-                throw new ObjectDisposedException(GetType().Name);
-
-            _disposed = true;
-            _mutableString = null;
         }
     }
 }
