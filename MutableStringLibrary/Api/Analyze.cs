@@ -1,30 +1,33 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 
 namespace MutableStringLibrary.Api
 {
-    public class Analyze
+    public class Analyze : IDisposable
     {
-        private readonly MutableString _mutableString;
+        private bool _disposed;
+        private MutableString? _mutableString;
         
         private CompareOptions Options =>
-            _mutableString.IgnoreCase
+            _mutableString!.IgnoreCase
                 ? CompareOptions.IgnoreCase
                 : CompareOptions.None;
 
         private StringComparison Comparison =>
-            _mutableString.IgnoreCase
+            _mutableString!.IgnoreCase
                 ? StringComparison.CurrentCultureIgnoreCase
                 : StringComparison.CurrentCulture;
 
         internal Analyze(MutableString mutableString)
         {
+            _disposed = false;
             _mutableString = mutableString;
         }
 
         public bool Is(string? other)
         {
-            if (_mutableString.Value == null)
+            if (_mutableString!.Value == null)
                 return other == null;
 
             return string.Compare(_mutableString.Value, other, CultureInfo.CurrentCulture, Options) == 0;
@@ -41,7 +44,7 @@ namespace MutableStringLibrary.Api
             start = -1;
             length = -1;
 
-            if (_mutableString.Value == null && other == null)
+            if (_mutableString!.Value == null && other == null)
             {
                 start = 0;
                 length = 0;
@@ -62,7 +65,7 @@ namespace MutableStringLibrary.Api
 
         public bool IsLimitedToCharacters(string? characters)
         {
-            if (_mutableString.Value == null && characters == null)
+            if (_mutableString!.Value == null && characters == null)
                 return true;
 
             if (_mutableString.Value == "" && characters == "")
@@ -75,13 +78,16 @@ namespace MutableStringLibrary.Api
                 ? characters.ToLower(CultureInfo.CurrentCulture) + characters.ToUpper(CultureInfo.CurrentCulture)
                 : characters;
 
-            foreach (var c in _mutableString.Value!)
-            {
-                if (allowed!.IndexOf(c) <= -1)
-                    return false;
-            }
+            return _mutableString.Value!.All(c => allowed!.IndexOf(c) > -1);
+        }
 
-            return true;
+        public void Dispose()
+        {
+            if (_disposed)
+                throw new ObjectDisposedException(GetType().Name);
+
+            _disposed = true;
+            _mutableString = null;
         }
     }
 }

@@ -22,5 +22,15 @@ def";
             Assert.True(s.Modify.MiddleTrim());
             Assert.True(s.Value == "abc def");
         }
+
+        [Fact]
+        public void LimitToCharacters()
+        {
+            var s = new MutableString("Abc");
+            Assert.False(s.Modify.LimitToCharacters("abcd"));
+            Assert.True(s.Value == "Abc");
+            Assert.True(s.Modify.LimitToCharacters("BC"));
+            Assert.True(s.Value == "bc");
+        }
     }
 }
