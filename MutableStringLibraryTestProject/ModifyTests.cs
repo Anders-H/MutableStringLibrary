@@ -32,5 +32,20 @@ def";
             Assert.True(s.Modify.LimitToCharacters("BC"));
             Assert.True(s.Value == "bc");
         }
+
+        [Theory]
+        [InlineData("ABC", -1, "", "ABC")]
+        [InlineData("ABC", 0, "", "ABC")]
+        [InlineData("ABC", 1, "A", "BC")]
+        [InlineData("ABC", 2, "AB", "C")]
+        [InlineData("ABC", 3, "ABC", "")]
+        [InlineData("ABC", 4, "ABC", "")]
+        public void CutBeginningAt(string source, int position, string result, string remain)
+        {
+            var s = new MutableString(source);
+            var x = s.Modify.CutBeginningAt(position);
+            Assert.True(x.Value == result);
+            Assert.True(s.Value == remain);
+        }
     }
 }

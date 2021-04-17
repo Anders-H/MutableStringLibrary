@@ -61,5 +61,31 @@ namespace MutableStringLibrary.Api
             
             return modified;
         }
+
+        public MutableString CutBeginningAt(int position)
+        {
+            if (string.IsNullOrEmpty(_mutableString.Value))
+            {
+                _mutableString.Modify.Reset();
+                return _mutableString.Copy(_mutableString.DefaultValue);
+            }
+
+            if (position <= 0)
+            {
+                return _mutableString.Copy(_mutableString.DefaultValue);
+            }
+
+            if (position >= _mutableString.Value.Length)
+            {
+                var result = _mutableString.Value;
+                _mutableString.Modify.Reset();
+                return _mutableString.Copy(result);
+            }
+
+            var cutaway = _mutableString.Value.Substring(0, position);
+            _mutableString.Value = _mutableString.Value.Substring(position);
+
+            return new MutableString(cutaway);
+        }
     }
 }

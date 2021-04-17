@@ -1,4 +1,7 @@
-﻿using MutableStringLibrary.Api;
+﻿using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using MutableStringLibrary.Api;
 using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary
@@ -38,6 +41,13 @@ namespace MutableStringLibrary
             Value = value;
         }
 
+        public MutableString Copy(string? newValue) =>
+            new(newValue, IgnoreCase, DefaultsToNull, AutoTrim)
+            {
+                EqualityComparer = EqualityComparer,
+                SubsetComparer = SubsetComparer
+            };
+        
         public string? Value
         {
             get => _value;
