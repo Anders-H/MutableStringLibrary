@@ -1,4 +1,5 @@
 ﻿using MutableStringLibrary.Api;
+using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary
 {
@@ -11,6 +12,8 @@ namespace MutableStringLibrary
         public bool DefaultsToNull { get; set; }
         public Analyze Analyze { get; }
         public Modify Modify { get; }
+
+        public IEqualityComparer? EqualityComparer { get; set; }
 
         public MutableString() : this("", true, false, true)
         {

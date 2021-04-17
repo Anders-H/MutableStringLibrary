@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using MutableStringLibrary.Comparers.DefaultComparers;
 
 namespace MutableStringLibrary.Api
 {
     public class Analyze
     {
-        private MutableString _mutableString;
+        private readonly MutableString _mutableString;
         
-        private CompareOptions Options =>
-            _mutableString!.IgnoreCase
-                ? CompareOptions.IgnoreCase
-                : CompareOptions.None;
-
         private StringComparison Comparison =>
             _mutableString!.IgnoreCase
                 ? StringComparison.CurrentCultureIgnoreCase
@@ -23,13 +19,9 @@ namespace MutableStringLibrary.Api
             _mutableString = mutableString;
         }
 
-        public bool Is(string? other)
-        {
-            if (_mutableString!.Value == null)
-                return other == null;
-
-            return string.Compare(_mutableString.Value, other, CultureInfo.CurrentCulture, Options) == 0;
-        }
+        public bool Is(string? other) =>
+            (_mutableString.EqualityComparer ?? new EqualityComparer())
+                .Equals(_mutableString.IgnoreCase, _mutableString.Value, other);
 
         public bool Has(string? other) =>
             Has(other, out _, out _);

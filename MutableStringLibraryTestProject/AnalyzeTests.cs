@@ -1,4 +1,5 @@
 using MutableStringLibrary;
+using MutableStringLibraryTestProject.TestObjects;
 using Xunit;
 
 namespace MutableStringLibraryTestProject
@@ -32,6 +33,21 @@ namespace MutableStringLibraryTestProject
                 Assert.True(s.Analyze.Is(s2));
             else
                 Assert.False(s.Analyze.Is(s2));
+        }
+
+        [Fact]
+        public void EqualityComparer()
+        {
+            var s = new MutableString("Hello");
+            Assert.True(s.Analyze.Is("hello"));
+            Assert.False(s.Analyze.Is("Good bye"));
+            s.EqualityComparer = new EqualityComparer();
+            s.Value = "GOOD";
+            Assert.True(s.Analyze.Is("DOG"));
+            Assert.False(s.Analyze.Is("GOOD"));
+            s.EqualityComparer = null;
+            Assert.False(s.Analyze.Is("DOG"));
+            Assert.True(s.Analyze.Is("GOOD"));
         }
 
         [Fact]
