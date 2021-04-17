@@ -1,6 +1,6 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
+using MutableStringLibrary.Comparers;
 using MutableStringLibrary.Comparers.DefaultComparers;
 
 namespace MutableStringLibrary.Api
@@ -9,11 +9,6 @@ namespace MutableStringLibrary.Api
     {
         private readonly MutableString _mutableString;
         
-        private StringComparison Comparison =>
-            _mutableString!.IgnoreCase
-                ? StringComparison.CurrentCultureIgnoreCase
-                : StringComparison.CurrentCulture;
-
         internal Analyze(MutableString mutableString)
         {
             _mutableString = mutableString;
@@ -23,35 +18,23 @@ namespace MutableStringLibrary.Api
             (_mutableString.EqualityComparer ?? new EqualityComparer())
                 .Equals(_mutableString.IgnoreCase, _mutableString.Value, other);
 
+        public bool Is(string? other, IEqualityComparer equalityComparer) =>
+            equalityComparer
+                .Equals(_mutableString.IgnoreCase, _mutableString.Value, other);
+
         public bool Has(string? other) =>
             Has(other, out _, out _);
 
         public bool Has(string? other, out int start) =>
             Has(other, out start, out _);
 
-        public bool Has(string? other, out int start, out int length)
-        {
-            start = -1;
-            length = -1;
+        public bool Has(string? other, out int start, out int length) =>
+            (_mutableString.SubsetComparer ?? new SubsetComparer())
+                .Has(_mutableString.IgnoreCase, _mutableString.Value, other, out start, out length);
 
-            if (_mutableString!.Value == null && other == null)
-            {
-                start = 0;
-                length = 0;
-                return true;
-            }
-
-            if (_mutableString.Value == null || other == null)
-                return false;
-
-            var foundAt = _mutableString.Value.IndexOf(other, Comparison);
-            if (foundAt < 0)
-                return false;
-
-            start = foundAt;
-            length = other.Length;
-            return true;
-        }
+        public bool Has(string? other, out int start, out int length, ISubsetComparer subsetComparer) =>
+            subsetComparer
+                .Has(_mutableString.IgnoreCase, _mutableString.Value, other, out start, out length);
 
         public bool IsLimitedToCharacters(string? characters)
         {

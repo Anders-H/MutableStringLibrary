@@ -14,6 +14,7 @@ namespace MutableStringLibrary
         public Modify Modify { get; }
 
         public IEqualityComparer? EqualityComparer { get; set; }
+        public ISubsetComparer? SubsetComparer { get; set; }
 
         public MutableString() : this("", true, false, true)
         {
