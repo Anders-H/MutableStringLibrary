@@ -2,6 +2,8 @@
 
 A simple wrapper around the .NET String class that allows for easy value comparison and modification, with or without case sensitivity.
 
+[NuGet:](https://www.nuget.org/packages/MutableStringLibrary/) `Install-Package MutableStringLibrary`
+
 ## For analyzing a string:
 
 - `Has` checks for a substring in a string.
