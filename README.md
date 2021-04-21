@@ -12,6 +12,7 @@ A simple wrapper around the .NET String class that allows for easy value compari
 
 ## For modifying a string:
 - `CutBeginningAt` returns the characters until the given position and keeps the remainder.
+- `CutEntAt` returns the characters efter the given position and keeps the beginning.
 - `LimitToCharacters` removes any character that is not represented in a given set of characters.
 - `MiddleTrim` changes any whitespaces to a single space.
 - `Reset` sets the value to the default value, depending on the `DefaultsToNull` flag.

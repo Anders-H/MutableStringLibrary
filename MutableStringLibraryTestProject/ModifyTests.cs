@@ -1,4 +1,5 @@
 ﻿using MutableStringLibrary;
+using MutableStringLibraryTestProject.TestObjects;
 using Xunit;
 
 namespace MutableStringLibraryTestProject
@@ -46,6 +47,34 @@ def";
             var x = s.Modify.CutBeginningAt(position);
             Assert.True(x.Value == result);
             Assert.True(s.Value == remain);
+        }
+
+        [Theory]
+        [InlineData("ABC", -1, "ABC", "")]
+        [InlineData("ABC", 0, "ABC", "")]
+        [InlineData("ABC", 1, "BC", "A")]
+        [InlineData("ABC", 2, "C", "AB")]
+        [InlineData("ABC", 3, "", "ABC")]
+        [InlineData("ABC", 4, "", "ABC")]
+        public void CutEndAt(string source, int position, string result, string remain)
+        {
+            var s = new MutableString(source);
+            var x = s.Modify.CutEndAt(position);
+            Assert.True(x.Value == result);
+            Assert.True(s.Value == remain);
+        }
+
+        [Fact]
+        public void CanCutWithPositionFinder()
+        {
+            var s = new MutableString("ABC123");
+            var x = s.Modify.CutBeginningAt(new PositionFinder());
+            Assert.True(x.Value == "ABC");
+            Assert.True(s.Value == "123");
+            s = new MutableString("ABC123");
+            x = s.Modify.CutEndAt(new PositionFinder());
+            Assert.True(x.Value == "123");
+            Assert.True(s.Value == "ABC");
         }
     }
 }

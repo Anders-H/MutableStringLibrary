@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using System.Text;
 using System.Text.RegularExpressions;
+using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary.Api
 {
@@ -85,7 +86,39 @@ namespace MutableStringLibrary.Api
             var cutaway = _mutableString.Value.Substring(0, position);
             _mutableString.Value = _mutableString.Value.Substring(position);
 
-            return new MutableString(cutaway);
+            return _mutableString.Copy(cutaway);
         }
+
+        public MutableString CutBeginningAt(IPositionFinder position) =>
+            CutBeginningAt(position.Find(_mutableString));
+
+        public MutableString CutEndAt(int position)
+        {
+            if (string.IsNullOrEmpty(_mutableString.Value))
+            {
+                _mutableString.Modify.Reset();
+                return _mutableString.Copy(_mutableString.DefaultValue);
+            }
+
+            if (position <= 0)
+            {
+                var result = _mutableString.Value;
+                _mutableString.Modify.Reset();
+                return _mutableString.Copy(result);
+            }
+
+            if (position >= _mutableString.Value.Length)
+            {
+                return _mutableString.Copy(_mutableString.DefaultValue);
+            }
+
+            var cutaway = _mutableString.Value.Substring(position);
+            _mutableString.Value = _mutableString.Value.Substring(0, position);
+
+            return _mutableString.Copy(cutaway);
+        }
+
+        public MutableString CutEndAt(IPositionFinder position) =>
+            CutEndAt(position.Find(_mutableString));
     }
 }
