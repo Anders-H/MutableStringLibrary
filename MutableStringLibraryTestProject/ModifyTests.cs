@@ -35,6 +35,22 @@ def";
         }
 
         [Theory]
+        [InlineData("ABCDEF", 1, 4, "BCDE", "AF")]
+        [InlineData("ABCDEF", 1, 0, "", "ABCDEF")]
+        [InlineData("ABCDEF", 0, 6, "ABCDEF", "")]
+        [InlineData("ABCDEF", -1, 6, "ABCDEF", "")]
+        [InlineData("ABCDEF", 0, 7, "ABCDEF", "")]
+        [InlineData("ABCDEF", -1, 20, "ABCDEF", "")]
+        [InlineData("ABCDEF", 4, 20, "EF", "ABCD")]
+        public void CutAt(string source, int position, int length, string result, string remain)
+        {
+            var s = new MutableString(source);
+            var x = s.Modify.CutAt(position, length);
+            Assert.True(x.Value == result);
+            Assert.True(s.Value == remain);
+        }
+
+        [Theory]
         [InlineData("ABC", -1, "", "ABC")]
         [InlineData("ABC", 0, "", "ABC")]
         [InlineData("ABC", 1, "A", "BC")]

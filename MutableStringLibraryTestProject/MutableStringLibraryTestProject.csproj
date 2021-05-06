@@ -20,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\MutableStringLibrary\MutableStringLibrary.csproj" />
+	  <ProjectReference Include="..\MutableStringLibrary\MutableStringLibrary.csproj" />
 	</ItemGroup>
 
 </Project>

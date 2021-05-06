@@ -11,6 +11,7 @@ A simple wrapper around the .NET String class that allows for easy value compari
 - `IsLimitedToCharacters` checks if the characters of a string are limited to a given set of characters.
 
 ## For modifying a string:
+- `CutAt` removes a given section from the string and returns the removed part.
 - `CutBeginningAt` returns the characters until the given position and keeps the remainder.
 - `CutEntAt` returns the characters efter the given position and keeps the beginning.
 - `LimitToCharacters` removes any character that is not represented in a given set of characters.

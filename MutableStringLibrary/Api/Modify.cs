@@ -9,31 +9,37 @@ namespace MutableStringLibrary.Api
     {
         private readonly MutableString _mutableString;
 
+        private string? V
+        {
+            get => _mutableString.Value;
+            set => _mutableString.Value = value;
+        }
+
         internal Modify(MutableString mutableString)
         {
             _mutableString = mutableString;
         }
 
         public void Reset() =>
-            _mutableString!.Value = _mutableString.DefaultValue;
+            V = _mutableString.DefaultValue;
 
         public bool MiddleTrim()
         {
             if (string.IsNullOrWhiteSpace(_mutableString!.Value))
             {
-                _mutableString.Value = _mutableString.DefaultValue;
+                V = _mutableString.DefaultValue;
                 return false;
             }
 
-            var original = _mutableString.Value;
+            var original = V;
 
-            _mutableString.Value = _mutableString.AutoTrim
-                ? _mutableString.Value.Trim()
-                : _mutableString.Value;
+            V = _mutableString.AutoTrim
+                ? V!.Trim()
+                : V;
             
-            var parts = Regex.Split(_mutableString.Value, @"\s+");
-            _mutableString.Value = string.Join(' ', parts);
-            return _mutableString.Value != original;
+            var parts = Regex.Split(V!, @"\s+");
+            V = string.Join(' ', parts);
+            return V != original;
         }
 
         public bool LimitToCharacters(string characters)
@@ -48,7 +54,7 @@ namespace MutableStringLibrary.Api
             var modified = false;
             var result = new StringBuilder();
 
-            foreach (var c in _mutableString.Value)
+            foreach (var c in V!)
             {
                 if (allowed.IndexOf(c) > -1)
                     result.Append(c);
@@ -56,16 +62,42 @@ namespace MutableStringLibrary.Api
                     modified = true;
             }
 
-            _mutableString.Value = _mutableString.AutoTrim
+            V = _mutableString.AutoTrim
                 ? result.ToString().Trim()
                 : result.ToString();
             
             return modified;
         }
 
+        public MutableString CutAt(int position, int length)
+        {
+            if (string.IsNullOrEmpty(V))
+            {
+                _mutableString.Modify.Reset();
+                return _mutableString.Copy(_mutableString.DefaultValue);
+            }
+
+            if (length <= 0)
+                return _mutableString.Copy(_mutableString.DefaultValue);
+
+            if (position <= 0)
+                position = 0;
+
+            if (position >= V.Length)
+                return _mutableString.Copy(_mutableString.DefaultValue);
+
+            if (position + length > V.Length)
+                length = V.Length - position;
+
+            var cutaway = V.Substring(position, length);
+            V = $"{V.Substring(0, position)}{V[(position + length)..]}";
+
+            return _mutableString.Copy(cutaway);
+        }
+
         public MutableString CutBeginningAt(int position)
         {
-            if (string.IsNullOrEmpty(_mutableString.Value))
+            if (string.IsNullOrEmpty(V))
             {
                 _mutableString.Modify.Reset();
                 return _mutableString.Copy(_mutableString.DefaultValue);
@@ -76,15 +108,15 @@ namespace MutableStringLibrary.Api
                 return _mutableString.Copy(_mutableString.DefaultValue);
             }
 
-            if (position >= _mutableString.Value.Length)
+            if (position >= V.Length)
             {
-                var result = _mutableString.Value;
+                var result = V;
                 _mutableString.Modify.Reset();
                 return _mutableString.Copy(result);
             }
 
-            var cutaway = _mutableString.Value.Substring(0, position);
-            _mutableString.Value = _mutableString.Value.Substring(position);
+            var cutaway = V.Substring(0, position);
+            V = V.Substring(position);
 
             return _mutableString.Copy(cutaway);
         }
@@ -94,7 +126,7 @@ namespace MutableStringLibrary.Api
 
         public MutableString CutEndAt(int position)
         {
-            if (string.IsNullOrEmpty(_mutableString.Value))
+            if (string.IsNullOrEmpty(V))
             {
                 _mutableString.Modify.Reset();
                 return _mutableString.Copy(_mutableString.DefaultValue);
@@ -102,18 +134,18 @@ namespace MutableStringLibrary.Api
 
             if (position <= 0)
             {
-                var result = _mutableString.Value;
+                var result = V;
                 _mutableString.Modify.Reset();
                 return _mutableString.Copy(result);
             }
 
-            if (position >= _mutableString.Value.Length)
+            if (position >= V.Length)
             {
                 return _mutableString.Copy(_mutableString.DefaultValue);
             }
 
-            var cutaway = _mutableString.Value.Substring(position);
-            _mutableString.Value = _mutableString.Value.Substring(0, position);
+            var cutaway = V.Substring(position);
+            V = V.Substring(0, position);
 
             return _mutableString.Copy(cutaway);
         }

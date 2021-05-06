@@ -8,7 +8,10 @@ namespace MutableStringLibrary.Api
     public class Analyze
     {
         private readonly MutableString _mutableString;
-        
+
+        private string? V =>
+            _mutableString.Value;
+
         internal Analyze(MutableString mutableString)
         {
             _mutableString = mutableString;
@@ -16,11 +19,11 @@ namespace MutableStringLibrary.Api
 
         public bool Is(string? other) =>
             (_mutableString.EqualityComparer ?? new EqualityComparer())
-                .Equals(_mutableString.IgnoreCase, _mutableString.Value, other);
+                .Equals(_mutableString.IgnoreCase, V, other);
 
         public bool Is(string? other, IEqualityComparer equalityComparer) =>
             equalityComparer
-                .Equals(_mutableString.IgnoreCase, _mutableString.Value, other);
+                .Equals(_mutableString.IgnoreCase, V, other);
 
         public bool Has(string? other) =>
             Has(other, out _, out _);
@@ -30,18 +33,18 @@ namespace MutableStringLibrary.Api
 
         public bool Has(string? other, out int start, out int length) =>
             (_mutableString.SubsetComparer ?? new SubsetComparer())
-                .Has(_mutableString.IgnoreCase, _mutableString.Value, other, out start, out length);
+                .Has(_mutableString.IgnoreCase, V, other, out start, out length);
 
         public bool Has(string? other, out int start, out int length, ISubsetComparer subsetComparer) =>
             subsetComparer
-                .Has(_mutableString.IgnoreCase, _mutableString.Value, other, out start, out length);
+                .Has(_mutableString.IgnoreCase, V, other, out start, out length);
 
         public bool IsLimitedToCharacters(string? characters)
         {
             if (_mutableString!.Value == null && characters == null)
                 return true;
 
-            if (_mutableString.Value == "" && characters == "")
+            if (V == "" && characters == "")
                 return true;
 
             if (string.IsNullOrEmpty(characters))
@@ -51,7 +54,7 @@ namespace MutableStringLibrary.Api
                 ? characters.ToLower(CultureInfo.CurrentCulture) + characters.ToUpper(CultureInfo.CurrentCulture)
                 : characters;
 
-            return _mutableString.Value!.All(c => allowed!.IndexOf(c) > -1);
+            return V!.All(c => allowed!.IndexOf(c) > -1);
         }
     }
 }

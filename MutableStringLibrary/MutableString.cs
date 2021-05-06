@@ -1,7 +1,4 @@
-﻿using System.IO;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using MutableStringLibrary.Api;
+﻿using MutableStringLibrary.Api;
 using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary
@@ -40,6 +37,9 @@ namespace MutableStringLibrary
             Modify = new Modify(this);
             Value = value;
         }
+
+        public MutableString Copy() =>
+            Copy(Value);
 
         public MutableString Copy(string? newValue) =>
             new(newValue, IgnoreCase, DefaultsToNull, AutoTrim)
