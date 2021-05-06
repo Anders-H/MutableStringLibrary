@@ -95,6 +95,12 @@ namespace MutableStringLibrary.Api
             return _mutableString.Copy(cutaway);
         }
 
+        public MutableString CutAt(IPositionAndLengthFinder position)
+        {
+            var (p, l) = position.Find(_mutableString);
+            return CutAt(p, l);
+        }
+
         public MutableString CutBeginningAt(int position)
         {
             if (string.IsNullOrEmpty(V))
