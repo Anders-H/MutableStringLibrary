@@ -24,9 +24,13 @@ A simple wrapper around the .NET String class that allows for easy value compari
 - `DefaultsToNull`
 - `IgnoreCase`
 
+# Functions for modifying a string
+
+These functions modify the string object and returns the difference.
+
 ## CutBeginningAt
 
-The function `CutBeginningAt` removes the beginning of a string and returns the removed part as a mutable string with the same flags.
+The function `CutBeginningAt` removes the beginning of a string and returns the removed part as a mutable string with the same flags as the original.
 
 **Basic example:**
 
@@ -50,4 +54,32 @@ var s1 = new MutableString("Paul Stanley");
 var s2 = s1.Modify.CutBeginningAt(new PositionFinder());
 Console.WriteLine(s2.Value); // Paul
 Console.WriteLine(s1.Value); // Stanley
+```
+
+## CutEndAt
+
+The function `CutEndAt` removes the end of a string and returns the removed part as a mutable string with the same flags as the original.
+
+**Basic example:**
+
+```
+var s1 = new MutableString("Paul Stanley");
+var s2 = s1.Modify.CutEndAt(5);
+Console.WriteLine(s2.Value); // Stanley
+Console.WriteLine(s1.Value); // Paul
+```
+
+**Advanced example:**
+
+```
+class PositionFinder : IPositionFinder
+{
+    public int Find(MutableString value) =>
+        5;
+}
+
+var s1 = new MutableString("Paul Stanley");
+var s2 = s1.Modify.CutEndAt(new PositionFinder());
+Console.WriteLine(s2.Value); // Stanley
+Console.WriteLine(s1.Value); // Paul
 ```
