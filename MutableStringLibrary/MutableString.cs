@@ -78,5 +78,8 @@ namespace MutableStringLibrary
 
         public string? DefaultValue =>
             DefaultsToNull ? null : "";
+
+        public override string ToString() =>
+            Value ?? "";
     }
 }

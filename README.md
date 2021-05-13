@@ -23,3 +23,31 @@ A simple wrapper around the .NET String class that allows for easy value compari
 - `AutoTrim`
 - `DefaultsToNull`
 - `IgnoreCase`
+
+## CutBeginningAt
+
+The function `CutBeginningAt` removes the beginning of a string and returns the removed part as a mutable string with the same flags.
+
+**Basic example:**
+
+```
+var s1 = new MutableString("Paul Stanley");
+var s2 = s1.Modify.CutBeginningAt(5);
+Console.WriteLine(s2.Value); // Paul
+Console.WriteLine(s1.Value); // Stanley
+```
+
+**Advanced example:**
+
+```
+class PositionFinder : IPositionFinder
+{
+    public int Find(MutableString value) =>
+        5;
+}
+
+var s1 = new MutableString("Paul Stanley");
+var s2 = s1.Modify.CutBeginningAt(new PositionFinder());
+Console.WriteLine(s2.Value); // Paul
+Console.WriteLine(s1.Value); // Stanley
+```
