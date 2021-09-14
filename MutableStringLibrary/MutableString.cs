@@ -1,4 +1,6 @@
-﻿using MutableStringLibrary.Api;
+﻿using System.Linq;
+using System.Text.RegularExpressions;
+using MutableStringLibrary.Api;
 using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary
@@ -81,5 +83,26 @@ namespace MutableStringLibrary
 
         public override string ToString() =>
             Value ?? "";
+
+        public MutableStringList Rows()
+        {
+            if (ToString() == "")
+                return new MutableStringList();
+
+            var split = Regex.Split(Value!, @"\r\n");
+            var result = new MutableStringList();
+
+            result.AddRange(
+                split.Select(s => new MutableString(s, IgnoreCase, DefaultsToNull, AutoTrim))
+            );
+
+            return result;
+        }
+
+        public bool IsNullOrEmpty() =>
+            string.IsNullOrEmpty(Value);
+
+        public bool IsNullOrWhiteSpace() =>
+            string.IsNullOrWhiteSpace(Value);
     }
 }
