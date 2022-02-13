@@ -40,6 +40,25 @@ namespace MutableStringLibrary
             Value = value;
         }
 
+        public MutableString(string? value, StringFeature features) : this(
+            value,
+            (features & StringFeature.IgnoreCase) > 0,
+            (features & StringFeature.DefaultsToNull) > 0,
+            (features & StringFeature.AutoTrim) > 0
+        )
+        {
+        }
+
+        public MutableString(StringFeature features) : this(
+            "",
+            (features & StringFeature.IgnoreCase) > 0,
+            (features & StringFeature.DefaultsToNull) > 0,
+            (features & StringFeature.AutoTrim) > 0
+        )
+        {
+            Modify.Reset();
+        }
+
         public MutableString Copy() =>
             Copy(Value);
 
