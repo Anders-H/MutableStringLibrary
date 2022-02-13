@@ -5,7 +5,7 @@ using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary
 {
-    public class MutableString
+    public class MutableString : IAnalyze
     {
         private string? _value;
         private bool _autoTrim;
@@ -123,5 +123,28 @@ namespace MutableStringLibrary
 
         public bool IsNullOrWhiteSpace() =>
             string.IsNullOrWhiteSpace(Value);
+
+        // *** IAnalyze ***
+
+        public bool Is(string? other) =>
+            Analyze.Is(other);
+
+        public bool Is(string? other, IEqualityComparer equalityComparer) =>
+            Analyze.Is(other, equalityComparer);
+
+        public bool Has(string? other) =>
+            Analyze.Has(other);
+
+        public bool Has(string? other, out int start) =>
+            Analyze.Has(other, out start);
+
+        public bool Has(string? other, out int start, out int length) =>
+            Analyze.Has(other, out start, out length);
+
+        public bool Has(string? other, out int start, out int length, ISubsetComparer subsetComparer) =>
+            Analyze.Has(other, out start, out length, subsetComparer);
+
+        public bool IsLimitedToCharacters(string? characters) =>
+            Analyze.IsLimitedToCharacters(characters);
     }
 }

@@ -25,7 +25,7 @@ public class Modify
 
     public bool MiddleTrim()
     {
-        if (string.IsNullOrWhiteSpace(_mutableString!.Value))
+        if (string.IsNullOrWhiteSpace(_mutableString.Value))
         {
             V = _mutableString.DefaultValue;
             return false;
@@ -44,7 +44,7 @@ public class Modify
 
     public bool LimitToCharacters(string characters)
     {
-        if (string.IsNullOrEmpty(_mutableString!.Value))
+        if (string.IsNullOrEmpty(_mutableString.Value))
             return true;
 
         var allowed = _mutableString.IgnoreCase

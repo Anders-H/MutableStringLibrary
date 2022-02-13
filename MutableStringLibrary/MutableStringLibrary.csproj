@@ -4,19 +4,25 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-		<Version>1.0.8</Version>
+		<Version>1.0.9</Version>
 		<RepositoryUrl>https://github.com/Anders-H/MutableStringLibrary</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/Anders-H/MutableStringLibrary/blob/main/README.md</PackageProjectUrl>
 		<Authors>Anders Hesselbom</Authors>
 		<PackageIcon>mutablestringicon.png</PackageIcon>
 		<Description>String class with functions for modifying and analyzing its value.</Description>
-		<PackageReleaseNotes>Added row split.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added mutable string factory and improved interfaces.</PackageReleaseNotes>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageLicenseExpression>CC-BY-4.0</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>
 	  <None Include="..\mutablestringicon.png">
 	    <Pack>True</Pack>
 	    <PackagePath></PackagePath>
+	  </None>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
 	  </None>
 	</ItemGroup>
 

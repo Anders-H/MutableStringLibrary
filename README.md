@@ -4,6 +4,8 @@ A simple wrapper around the .NET String class that allows for easy value compari
 
 [NuGet:](https://www.nuget.org/packages/MutableStringLibrary/) `Install-Package MutableStringLibrary`
 
+[Read the source code here.](https://github.com/Anders-H/MutableStringLibrary)
+
 ## For analyzing a string:
 
 - `Has` checks for a substring in a string.
@@ -82,4 +84,16 @@ var s1 = new MutableString("Paul Stanley");
 var s2 = s1.Modify.CutEndAt(new PositionFinder());
 Console.WriteLine(s2.Value); // Stanley
 Console.WriteLine(s1.Value); // Paul
+```
+
+## MiddleTrim
+
+Replaces any whitespaces with a single space.
+
+**Example:**
+
+```
+var x = new MutableString("abc   123");
+Assert.True(s.Modify.MiddleTrim()); // Returns true if string is affected
+Assert.True("abc 123");
 ```
