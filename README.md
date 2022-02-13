@@ -38,7 +38,7 @@ The function `CutBeginningAt` removes the beginning of a string and returns the 
 
 ```
 var s1 = new MutableString("Paul Stanley");
-var s2 = s1.Modify.CutBeginningAt(5);
+var s2 = s1.CutBeginningAt(5);
 Console.WriteLine(s2.Value); // Paul
 Console.WriteLine(s1.Value); // Stanley
 ```
@@ -53,7 +53,7 @@ class PositionFinder : IPositionFinder
 }
 
 var s1 = new MutableString("Paul Stanley");
-var s2 = s1.Modify.CutBeginningAt(new PositionFinder());
+var s2 = s1.CutBeginningAt(new PositionFinder());
 Console.WriteLine(s2.Value); // Paul
 Console.WriteLine(s1.Value); // Stanley
 ```
@@ -66,7 +66,7 @@ The function `CutEndAt` removes the end of a string and returns the removed part
 
 ```
 var s1 = new MutableString("Paul Stanley");
-var s2 = s1.Modify.CutEndAt(5);
+var s2 = s1.CutEndAt(5);
 Console.WriteLine(s2.Value); // Stanley
 Console.WriteLine(s1.Value); // Paul
 ```
@@ -81,7 +81,7 @@ class PositionFinder : IPositionFinder
 }
 
 var s1 = new MutableString("Paul Stanley");
-var s2 = s1.Modify.CutEndAt(new PositionFinder());
+var s2 = s1.CutEndAt(new PositionFinder());
 Console.WriteLine(s2.Value); // Stanley
 Console.WriteLine(s1.Value); // Paul
 ```
@@ -94,6 +94,6 @@ Replaces any whitespaces with a single space.
 
 ```
 var x = new MutableString("abc   123");
-Assert.True(s.Modify.MiddleTrim()); // Returns true if string is affected
+Assert.True(s.MiddleTrim()); // Returns true if string is affected
 Assert.True("abc 123");
 ```

@@ -12,7 +12,7 @@ public class EnumInitialization
         Assert.True(x.IgnoreCase);
         Assert.False(x.AutoTrim);
         Assert.False(x.DefaultsToNull);
-        Assert.True(x.Analyze.Is("IGNORE Case"));
+        Assert.True(x.Is("IGNORE Case"));
     }
 
     [Fact]
@@ -22,7 +22,7 @@ public class EnumInitialization
         Assert.False(x.IgnoreCase);
         Assert.True(x.AutoTrim);
         Assert.False(x.DefaultsToNull);
-        Assert.True(x.Analyze.Is("autotrim"));
+        Assert.True(x.Is("autotrim"));
     }
 
     [Fact]
