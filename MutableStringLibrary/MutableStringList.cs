@@ -7,9 +7,9 @@ namespace MutableStringLibrary;
 
 public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
 {
-    public bool AutoTrim { get; set; }
     public bool IgnoreCase { get; set; }
     public bool DefaultsToNull { get; set; }
+    public bool AutoTrim { get; set; }
 
     public MutableStringList() : this(true, false, true)
     {
@@ -25,6 +25,8 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
     public void Add(string value) =>
         Add(new MutableString(value, IgnoreCase, DefaultsToNull, AutoTrim));
 
+    public MutableStringList BlankCopy() =>
+        new MutableStringList(IgnoreCase, DefaultsToNull, AutoTrim);
 
     public void RemoveIf(Func<MutableString, bool> d)
     {
@@ -69,7 +71,27 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
 
     public MutableStringList CutAt(int position, int length)
     {
-        return null;
+        if (position < 0)
+        {
+            length += position;
+            position = 0;
+        }
+
+        if (length <= 0)
+            return BlankCopy();
+
+        if (position >= Count)
+            return BlankCopy();
+
+        var result = BlankCopy();
+
+        for (var i = 0; i < length; i++)
+        {
+            result.Add(this[position]);
+            this.RemoveAt(position);
+        }
+
+        return result;
     }
 
     public MutableStringList CutAt(IPositionAndLengthFinder position)
