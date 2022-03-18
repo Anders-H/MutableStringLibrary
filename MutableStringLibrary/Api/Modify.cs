@@ -5,7 +5,7 @@ using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary.Api;
 
-public class Modify : IModify
+public class Modify : IModify, ICutter<MutableString>
 {
     private readonly MutableString _mutableString;
 

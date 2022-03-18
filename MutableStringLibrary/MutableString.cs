@@ -1,11 +1,11 @@
-﻿using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System;
+using System.Linq;
 using MutableStringLibrary.Api;
 using MutableStringLibrary.Comparers;
 
 namespace MutableStringLibrary;
 
-public class MutableString : IAnalyze, IModify
+public class MutableString : IAnalyze, IModify, ICutter<MutableString>
 {
     private string? _value;
     private bool _autoTrim;
@@ -108,7 +108,7 @@ public class MutableString : IAnalyze, IModify
         if (ToString() == "")
             return new MutableStringList();
 
-        var split = Regex.Split(Value!, @"\r\n");
+        var split = Value!.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
         var result = new MutableStringList();
 
         result.AddRange(

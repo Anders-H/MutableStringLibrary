@@ -10,17 +10,17 @@ namespace MutableStringLibraryTestProject
         public void MiddleTrim()
         {
             var s = new MutableString("abc");
-            Assert.False(s.Modify.MiddleTrim());
+            Assert.False(s.MiddleTrim());
             Assert.True(s.Value == "abc");
             s.Value = "abc 123";
-            Assert.False(s.Modify.MiddleTrim());
+            Assert.False(s.MiddleTrim());
             Assert.True(s.Value == "abc 123");
             s.Value = "abc  123";
-            Assert.True(s.Modify.MiddleTrim());
+            Assert.True(s.MiddleTrim());
             Assert.True(s.Value == "abc 123");
             s.Value = @"abc
 def";
-            Assert.True(s.Modify.MiddleTrim());
+            Assert.True(s.MiddleTrim());
             Assert.True(s.Value == "abc def");
         }
 
@@ -28,9 +28,9 @@ def";
         public void LimitToCharacters()
         {
             var s = new MutableString("Abc");
-            Assert.False(s.Modify.LimitToCharacters("abcd"));
+            Assert.False(s.LimitToCharacters("abcd"));
             Assert.True(s.Value == "Abc");
-            Assert.True(s.Modify.LimitToCharacters("BC"));
+            Assert.True(s.LimitToCharacters("BC"));
             Assert.True(s.Value == "bc");
         }
 
@@ -45,7 +45,7 @@ def";
         public void CutAt(string source, int position, int length, string result, string remain)
         {
             var s = new MutableString(source);
-            var x = s.Modify.CutAt(position, length);
+            var x = s.CutAt(position, length);
             Assert.True(x.Value == result);
             Assert.True(s.Value == remain);
         }
@@ -60,7 +60,7 @@ def";
         public void CutBeginningAt(string source, int position, string result, string remain)
         {
             var s = new MutableString(source);
-            var x = s.Modify.CutBeginningAt(position);
+            var x = s.CutBeginningAt(position);
             Assert.True(x.Value == result);
             Assert.True(s.Value == remain);
         }
@@ -75,7 +75,7 @@ def";
         public void CutEndAt(string source, int position, string result, string remain)
         {
             var s = new MutableString(source);
-            var x = s.Modify.CutEndAt(position);
+            var x = s.CutEndAt(position);
             Assert.True(x.Value == result);
             Assert.True(s.Value == remain);
         }
@@ -84,7 +84,7 @@ def";
         public void CanCutWithPositionFinder()
         {
             var s = new MutableString("ABC123");
-            var x = s.Modify.CutBeginningAt(new PositionFinder());
+            var x = s.CutBeginningAt(new PositionFinder());
             Assert.True(x.Value == "ABC");
             Assert.True(s.Value == "123");
             s = new MutableString("ABC123");

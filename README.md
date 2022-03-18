@@ -26,11 +26,11 @@ A simple wrapper around the .NET String class that allows for easy value compari
 - `DefaultsToNull`
 - `IgnoreCase`
 
-# Functions for modifying a string
+## Functions for modifying a string
 
 These functions modify the string object and returns the difference.
 
-## CutBeginningAt
+### CutBeginningAt
 
 The function `CutBeginningAt` removes the beginning of a string and returns the removed part as a mutable string with the same flags as the original.
 
@@ -58,7 +58,7 @@ Console.WriteLine(s2.Value); // Paul
 Console.WriteLine(s1.Value); // Stanley
 ```
 
-## CutEndAt
+### CutEndAt
 
 The function `CutEndAt` removes the end of a string and returns the removed part as a mutable string with the same flags as the original.
 
@@ -86,7 +86,7 @@ Console.WriteLine(s2.Value); // Stanley
 Console.WriteLine(s1.Value); // Paul
 ```
 
-## MiddleTrim
+### MiddleTrim
 
 Replaces any whitespaces with a single space.
 

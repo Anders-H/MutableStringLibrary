@@ -42,4 +42,18 @@ public class EnumInitialization
         Assert.False(y.Value == null);
         Assert.True(y.Value == "");
     }
+
+    [Fact]
+    public void CanUseAsFlag()
+    {
+        var x = new MutableString(StringFeature.DefaultsToNull | StringFeature.IgnoreCase);
+        Assert.True(x.IgnoreCase);
+        Assert.False(x.AutoTrim);
+        Assert.True(x.DefaultsToNull);
+
+        x = new MutableString(StringFeature.IgnoreCase | StringFeature.AutoTrim);
+        Assert.True(x.IgnoreCase);
+        Assert.True(x.AutoTrim);
+        Assert.False(x.DefaultsToNull);
+    }
 }

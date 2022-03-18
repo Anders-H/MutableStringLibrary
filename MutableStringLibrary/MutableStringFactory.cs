@@ -28,4 +28,7 @@ public class MutableStringFactory
 
     public MutableString Get(MutableString value) =>
         _template.Copy(value.Value);
+
+    public MutableStringList GetList() =>
+        new MutableStringList(_template.IgnoreCase, _template.DefaultsToNull, _template.AutoTrim);
 }

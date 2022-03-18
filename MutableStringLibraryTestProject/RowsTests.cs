@@ -11,12 +11,18 @@ public class RowsTests
         var x = new MutableString(@"  a  
 b
 
-c ", false, false, false).Rows();
+ c ", false, false, false).Rows();
         Assert.True(x.Count == 4);
         Assert.True(x[0].Value == "  a  ");
         Assert.True(x[1].Value == "b");
         Assert.True(x[2].Value == "");
         Assert.True(x[3].Value == " c ");
+
+        x.RemoveIfIsNullOrWhiteSpace();
+        Assert.True(x.Count == 3);
+        Assert.True(x[0].Value == "  a  ");
+        Assert.True(x[1].Value == "b");
+        Assert.True(x[2].Value == " c ");
     }
 
     [Fact]
@@ -38,11 +44,11 @@ c ", false, false, true).Rows();
     {
         var x = new MutableStringList
         {
-            new MutableString("a"),
-            new MutableString(""),
+            new("a"),
+            new(""),
             new MutableString(null, false, true, false),
-            new MutableString("b"),
-            new MutableString("       ")
+            new("b"),
+            new("       ")
         };
         x.RemoveIfIsNullOrWhiteSpace();
         Assert.True(x.Count == 2);
@@ -57,7 +63,7 @@ c ", false, false, true).Rows();
         {
             new("a"),
             new(""),
-            new(null, false, true, false),
+            new MutableString(null, false, true, false),
             new("b"),
             new("       ")
         };
