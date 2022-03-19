@@ -95,10 +95,10 @@ public class Modify : IModify, ICutter<MutableString>
         return _mutableString.Copy(cutaway);
     }
 
-    public MutableString CutAt(IPositionAndLengthFinder position)
+    public MutableString CutAt(IPositionAndLengthFinder<MutableString> position)
     {
-        var (p, l) = position.Find(_mutableString);
-        return CutAt(p, l);
+        var rp = position.Find(_mutableString);
+        return CutAt(rp.Position, rp.Length);
     }
 
     public MutableString CutBeginningAt(int position)

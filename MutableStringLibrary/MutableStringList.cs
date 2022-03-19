@@ -88,15 +88,16 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
         for (var i = 0; i < length; i++)
         {
             result.Add(this[position]);
-            this.RemoveAt(position);
+            RemoveAt(position);
         }
 
         return result;
     }
 
-    public MutableStringList CutAt(IPositionAndLengthFinder position)
+    public MutableStringList CutAt(IPositionAndLengthFinder<MutableStringList> position)
     {
-        return null;
+        var result = position.Find(this);
+        return CutAt(result.Position, result.Length);
     }
 
     public MutableStringList CutBeginningAt(int position)

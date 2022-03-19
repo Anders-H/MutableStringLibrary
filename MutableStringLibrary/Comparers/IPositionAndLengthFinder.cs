@@ -1,7 +1,8 @@
-﻿namespace MutableStringLibrary.Comparers
+﻿using MutableStringLibrary.Pointers;
+
+namespace MutableStringLibrary.Comparers;
+
+public interface IPositionAndLengthFinder<T>
 {
-    public interface IPositionAndLengthFinder
-    {
-        (int position, int length) Find(MutableString value);
-    }
+    RangePointer Find(T value);
 }

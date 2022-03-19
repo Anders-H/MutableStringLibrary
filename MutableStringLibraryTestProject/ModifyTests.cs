@@ -87,6 +87,7 @@ def";
             var x = s.CutBeginningAt(new PositionFinder());
             Assert.True(x.Value == "ABC");
             Assert.True(s.Value == "123");
+
             s = new MutableString("ABC123");
             x = s.Modify.CutEndAt(new PositionFinder());
             Assert.True(x.Value == "123");
