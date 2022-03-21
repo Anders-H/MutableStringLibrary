@@ -26,7 +26,13 @@ A simple wrapper around the .NET String class that allows for easy value compari
 - `DefaultsToNull`
 - `IgnoreCase`
 
-## Functions for modifying a string
+## For modifying a string list:
+
+- `CutAt` removes a given section from the string and returns the removed part.
+- `CutBeginningAt` returns the characters until the given position and keeps the remainder.
+- `CutEntAt` returns the characters efter the given position and keeps the beginning.
+
+## Examples: Functions for modifying a string
 
 These functions modify the string object and returns the difference.
 
