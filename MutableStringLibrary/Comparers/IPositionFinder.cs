@@ -1,7 +1,7 @@
 ﻿namespace MutableStringLibrary.Comparers
 {
-    public interface IPositionFinder
+    public interface IPositionFinder<T>
     {
-        int Find(MutableString value);
+        int Find(T value);
     }
 }

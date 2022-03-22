@@ -28,6 +28,13 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
     public MutableStringList BlankCopy() =>
         new MutableStringList(IgnoreCase, DefaultsToNull, AutoTrim);
 
+    public MutableStringList Copy()
+    {
+        var copy = BlankCopy();
+        copy.AddRange(this);
+        return copy;
+    }
+
     public void RemoveIf(Func<MutableString, bool> d)
     {
         var again = true;
@@ -102,21 +109,31 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
 
     public MutableStringList CutBeginningAt(int position)
     {
-        return null;
+        if (position <= 0 || Count <= 0)
+            return BlankCopy();
+
+        if (position >= Count)
+            return Copy();
+
+        var result = BlankCopy();
+
+        for (var i = 0; i < position; i++)
+        {
+            result.Add(this[0]);
+            RemoveAt(0);
+        }
+
+        return result;
     }
 
-    public MutableStringList CutBeginningAt(IPositionFinder position)
-    {
-        return null;
-    }
+    public MutableStringList CutBeginningAt(IPositionFinder<MutableStringList> position) =>
+        CutBeginningAt(position.Find(this));
 
     public MutableStringList CutEndAt(int position)
     {
         return null;
     }
 
-    public MutableStringList CutEndAt(IPositionFinder position)
-    {
-        return null;
-    }
+    public MutableStringList CutEndAt(IPositionFinder<MutableStringList> position) =>
+        CutEndAt(position.Find(this));
 }

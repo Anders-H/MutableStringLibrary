@@ -127,7 +127,7 @@ public class Modify : IModify, ICutter<MutableString>
         return _mutableString.Copy(cutaway);
     }
 
-    public MutableString CutBeginningAt(IPositionFinder position) =>
+    public MutableString CutBeginningAt(IPositionFinder<MutableString> position) =>
         CutBeginningAt(position.Find(_mutableString));
 
     public MutableString CutEndAt(int position)
@@ -156,6 +156,6 @@ public class Modify : IModify, ICutter<MutableString>
         return _mutableString.Copy(cutaway);
     }
 
-    public MutableString CutEndAt(IPositionFinder position) =>
+    public MutableString CutEndAt(IPositionFinder<MutableString> position) =>
         CutEndAt(position.Find(_mutableString));
 }

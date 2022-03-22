@@ -167,12 +167,12 @@ public class MutableString : IAnalyze, IModify, ICutter<MutableString>
     public MutableString CutBeginningAt(int position) =>
         Modify.CutBeginningAt(position);
 
-    public MutableString CutBeginningAt(IPositionFinder position) =>
+    public MutableString CutBeginningAt(IPositionFinder<MutableString> position) =>
         Modify.CutBeginningAt(position);
 
     public MutableString CutEndAt(int position) =>
         Modify.CutEndAt(position);
 
-    public MutableString CutEndAt(IPositionFinder position) =>
+    public MutableString CutEndAt(IPositionFinder<MutableString> position) =>
         Modify.CutEndAt(position);
 }
