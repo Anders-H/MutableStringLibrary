@@ -113,7 +113,11 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
             return BlankCopy();
 
         if (position >= Count)
-            return Copy();
+        {
+            var copy = Copy();
+            Clear();
+            return copy;
+        }
 
         var result = BlankCopy();
 
@@ -131,7 +135,27 @@ public class MutableStringList : List<MutableString>, ICutter<MutableStringList>
 
     public MutableStringList CutEndAt(int position)
     {
-        return null;
+        if (position >= Count || Count <= 0)
+            return BlankCopy();
+
+        if (position <= 0)
+        {
+            var copy = Copy();
+            Clear();
+            return copy;
+        }
+
+        var result = BlankCopy();
+
+        var count = Count;
+
+        for (var i = position; i < count; i++)
+        {
+            result.Add(this[position]);
+            RemoveAt(position);
+        }
+
+        return result;
     }
 
     public MutableStringList CutEndAt(IPositionFinder<MutableStringList> position) =>
