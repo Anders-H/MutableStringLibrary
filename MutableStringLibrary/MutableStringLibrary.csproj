@@ -10,7 +10,7 @@
 		<Authors>Anders Hesselbom</Authors>
 		<PackageIcon>mutablestringicon.png</PackageIcon>
 		<Description>String class with functions for modifying and analyzing its value.</Description>
-		<PackageReleaseNotes>Added mutable string factory and improved interfaces.</PackageReleaseNotes>
+		<PackageReleaseNotes>Added mutable string factory, generic interfaces (breaking change) and ability to cut lists.</PackageReleaseNotes>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageLicenseExpression>CC-BY-4.0</PackageLicenseExpression>
 	</PropertyGroup>
