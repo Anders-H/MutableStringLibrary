@@ -9,6 +9,7 @@ A simple wrapper around the .NET String class that allows for easy value compari
 ## For analyzing a string:
 
 - `Has` checks for a substring in a string.
+![image](https://raw.githubusercontent.com/Anders-H/MutableStringLibrary/main/Animations/Has.gif)
 - `Is` compares the string value with the value of another string.
 - `IsLimitedToCharacters` checks if the characters of a string are limited to a given set of characters.
 
